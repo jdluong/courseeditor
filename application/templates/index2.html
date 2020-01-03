@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        h1.title {
+            padding-top: 30px;
+            padding-bottom: 10px;
+        }
+        img.half {
+            height: 50%;
+            width: 50%;
+        }
+        img.third{
+            height: 33%;
+            width: 33%;
+        }
+        img.quarter {
+            height: 25%;
+            width: 25%;
+        }
+        .landing {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<html>
+    <body>
+    <h1 class="title" align="center">say hello to skoby</h1>
+
+    <div align="center">    
+        <img class="quarter" src="../static/skooby.jpg" alt="i love dog"></img>
+    </div>
+
+    <form method='post'>
+    <div align="center" class="landing">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Continue</button>
+    </div>
+    </form>
+
+
+    <script>
+    $( document.body ).click(function() {
+        $( "div:hidden" ).first().fadeIn( "slow" );
+    });
+    </script>
+    </body>
+
+</html>

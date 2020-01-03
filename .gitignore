@@ -1,0 +1,7 @@
+.vscode/
+myenv/
+mysql/
+nginx/
+__pycache__/
+.DS_Store
+*.yml

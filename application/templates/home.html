@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+            #body {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 10px;
+                max-width: 850px;
+            }
+            button.actions {
+                border: none;
+                padding: 5px;
+                /* color: red; */
+                background-color: transparent;
+                cursor: pointer;
+            }
+            
+            /* #courses {
+                margin-left: 7.5%;
+            } */
+        </style>
+    </head>
+
+    <body>
+
+        <div id="body">
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title">Your Courses</h3>
+                </div>
+                <div id="courses" class="card-block bg-light">
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Actions</th>
+                                <th>Name</th> 
+                                <th>Professor</th>
+                                <th>Grade</th>
+                                <th>Quarter</th>
+                                <th>Thoughts</th>
+                            </tr>
+                        </thead>
+                        {% for course in courses %}
+                        <tr>
+                            <td>
+                                <form method="post">
+                                    <div class="btn-group" role="group">
+                                        <button type="submit" class="form-control actions"><i class="material-icons">edit</i></button>
+                                        <button type="submit" class="form-control actions" name="delete" value="{{ course[0] }}"><i class="material-icons">delete</i></button>
+                                    </div>
+                                </form>
+                            </td>
+                            {% for data in course[1::] %}
+                            <td>{{data}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title">Add a course</h5>
+                </div>
+                <div class="card-block">
+                    <form method="post">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <strong>{{ form.name.label }}</strong> {{ form.name(class="form-control") }}
+                                {% if form.name.errors %}
+                                    <ul class="errors">{% for error in form.name.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <strong>{{ form.professor.label }}</strong> {{ form.professor(class="form-control") }}
+                                {% if form.professor.errors %}
+                                    <ul class="errors">{% for error in form.professor.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group col-md-1">
+                                <strong>{{ form.letter_grade.label }}</strong> {{ form.letter_grade(class="form-control") }}
+                                {% if form.letter_grade.errors %}
+                                    <ul class="errors">{% for error in form.letter_grade.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <strong>{{ form.sign_grade.label }}</strong> {{ form.sign_grade(class="form-control") }}
+                                {% if form.sign_grade.errors %}
+                                    <ul class="errors">{% for error in form.sign_grade.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group col-md-2">
+                                <strong>{{ form.quarter.label }}</strong> {{ form.quarter(class="form-control") }}
+                                {% if form.quarter.errors %}
+                                    <ul class="errors">{% for error in form.quarter.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group col-md-1">
+                                <strong>{{ form.year.label }}</strong> {{ form.year(class="form-control") }}
+                                {% if form.year.errors %}
+                                    <ul class="errors">{% for error in form.year.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>  
+
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-9">
+                                <strong>{{ form.thoughts.label }}</strong> {{ form.thoughts(class="form-control") }}
+                                {% if form.thoughts.errors %}
+                                    <ul class="errors">{% for error in form.thoughts.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" name="add_button" value="add">Add course</button>
+                    </form>
+                </div>
+            </div>
+        
+        </div>
+
+    </body>
+
+</html>
