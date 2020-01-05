@@ -101,7 +101,7 @@ def delete_all_courses():
     cur.close()
     con.close()
 
-def update_course():
+def update_course(course_id,name,instr,letter,sign,quarter,year,thoughts):
     con = mysql.connect(
         host = "127.0.0.1",
         port = "3308",
@@ -112,3 +112,13 @@ def update_course():
     cur = con.cursor()
 
     all_courses = get_courses()
+
+    update_stmt = ("UPDATE courses "
+                    " SET name = %s, instructor = %s, letter_grade = %s, sign_grade = %s, quarter = %s, year = %s, thoughts = %s "
+                    " WHERE course_id = %s")
+    
+    cur.execute(update_stmt,(name,instr,letter,sign,quarter,year,thoughts,course_id))
+    con.commit()
+
+    cur.close()
+    con.close()

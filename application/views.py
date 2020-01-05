@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from .models import get_courses, get_single_course, create_course, delete_single_course, delete_all_courses
+from .models import get_courses, get_single_course, create_course, delete_single_course, delete_all_courses, update_course
 from .forms import CourseForm
 from random import randint
 
@@ -73,6 +73,7 @@ def set_data(form,course):
 
 @app.route('/home/edit', methods=['GET','POST'])
 def edit():
+    course_id = request.args['id']
     form = CourseForm(request.form)
     form.submit.label.text = 'Confirm'
     
@@ -83,16 +84,25 @@ def edit():
         if 'delete' in request.form:
             delete_single_course(request.form['delete'])
         elif 'edit' in request.form:
-            return redirect(url_for('edit', id=request.form['edit']))
+            return redirect(url_for('edit', id=course_id))
 
         elif 'submit' in request.form and form.validate():
-            
+            course_data = (course_id,
+                            form.name.data,
+                            form.instructor.data,
+                            form.letter_grade.data,
+                            form.sign_grade.data,
+                            form.quarter.data,
+                            form.year.data,
+                            form.thoughts.data)
+            update_course(*course_data)
             return redirect(url_for('home'))
         elif 'cancel' in request.form:
             return redirect(url_for('home'))
     
-    course = get_single_course(request.args['id'])
+    course = get_single_course(course_id)
     set_data(form,course)
+
     courses = get_courses()
     return render_template('edit.html', courses=courses, home=False, form=form)
 
