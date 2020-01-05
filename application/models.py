@@ -1,7 +1,7 @@
 import mysql.connector as mysql
 
 
-def create_course(name,prof,grade,quarter,thoughts):
+def create_course(name,instr,letter,sign,quarter,year,thoughts):
     """
     course_data: tuple
     """
@@ -14,10 +14,10 @@ def create_course(name,prof,grade,quarter,thoughts):
         database = "dbtest"
     )
     cur = con.cursor()
-    insert_stmt = ("INSERT INTO Courses (Name, Professor, Grade, Quarter, Thoughts) "
-                    "VALUES (%s,%s,%s,%s,%s)")
+    insert_stmt = ("INSERT INTO courses (name, instructor, letter_grade, sign_grade, quarter, year, thoughts) "
+                    "VALUES (%s,%s,%s,%s,%s,%s,%s)")
 
-    cur.execute(insert_stmt,(name,prof,grade,quarter,thoughts))
+    cur.execute(insert_stmt,(name,instr,letter,sign,quarter,year,thoughts))
     con.commit()
 
     cur.close()
@@ -32,7 +32,7 @@ def get_courses():
         database = "dbtest"
     )
     cur = con.cursor()
-    get_stmt = ("SELECT * FROM Courses")
+    get_stmt = ("SELECT * FROM courses")
     
     cur.execute(get_stmt)
     courses = cur.fetchall()
@@ -40,6 +40,26 @@ def get_courses():
     cur.close()
     con.close()
     return courses
+
+def get_single_course(course_id):
+    con = mysql.connect(
+        host = "127.0.0.1",
+        port = "3308",
+        user = "root",
+        password = "password",
+        database = "dbtest"
+    )
+    cur = con.cursor()
+    get_stmt = ("SELECT * FROM courses "
+                "WHERE course_id=(%s)")
+    
+    cur.execute(get_stmt,(course_id,))
+    course = cur.fetchone()
+
+    cur.close()
+    con.close()
+    return course
+    
 
 def delete_single_course(course_id):
     con = mysql.connect(
@@ -51,8 +71,8 @@ def delete_single_course(course_id):
     )
     cur = con.cursor()
 
-    delete_stmt = ("DELETE FROM Courses "
-                    "WHERE ID=(%s)")
+    delete_stmt = ("DELETE FROM courses "
+                    "WHERE course_id = (%s)")
     
     cur.execute(delete_stmt,(course_id,))
     con.commit()
@@ -80,3 +100,15 @@ def delete_all_courses():
 
     cur.close()
     con.close()
+
+def update_course():
+    con = mysql.connect(
+        host = "127.0.0.1",
+        port = "3308",
+        user = "root",
+        password = "password",
+        database = "dbtest"
+    )
+    cur = con.cursor()
+
+    all_courses = get_courses()
